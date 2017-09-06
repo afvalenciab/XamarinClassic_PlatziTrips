@@ -12,23 +12,28 @@ namespace PlatziTrips.Droid
 	[Activity (Label = "PlatziTrips.Android", MainLauncher = true, Icon = "@drawable/icon")]
 	public class MainActivity : Activity
 	{
-		int count = 1;
+        EditText userEditText, passwordEditText;
+        Button loginButton;
 
-		protected override void OnCreate (Bundle bundle)
+        protected override void OnCreate (Bundle bundle)
 		{
 			base.OnCreate (bundle);
 
 			// Set our view from the "main" layout resource
 			SetContentView (Resource.Layout.Main);
 
-			// Get our button from the layout resource,
-			// and attach an event to it
-			Button button = FindViewById<Button> (Resource.Id.myButton);
-			
-			button.Click += delegate {
-				button.Text = string.Format ("{0} clicks!", count++);
-			};
+            userEditText = FindViewById<EditText>(Resource.Id.userEditText);
+            passwordEditText = FindViewById<EditText>(Resource.Id.passwordEditText);
+            loginButton = FindViewById<Button>(Resource.Id.loginButton);
+
+            loginButton.Click += LoginButton_Click;
 		}
+
+        private void LoginButton_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+        
 	}
 }
 
