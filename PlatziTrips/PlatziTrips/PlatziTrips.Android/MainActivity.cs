@@ -31,7 +31,14 @@ namespace PlatziTrips.Droid
 
         private void LoginButton_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(userEditText.Text) || string.IsNullOrEmpty(passwordEditText.Text))
+            {
+
+            }
+            else
+            {
+                //TODO: Navegar a la página principal
+            }
         }
         
 	}
