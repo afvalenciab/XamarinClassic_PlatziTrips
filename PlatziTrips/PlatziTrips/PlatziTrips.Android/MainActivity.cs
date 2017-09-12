@@ -6,6 +6,9 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using PlatziTrips.Classes;
+
+
 
 namespace PlatziTrips.Droid
 {
@@ -31,14 +34,7 @@ namespace PlatziTrips.Droid
 
         private void LoginButton_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(userEditText.Text) || string.IsNullOrEmpty(passwordEditText.Text))
-            {
-
-            }
-            else
-            {
-                //TODO: Navegar a la página principal
-            }
+            InicioSesion.IniciarSesion(userEditText.Text, passwordEditText.Text);
         }
         
 	}
