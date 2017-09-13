@@ -14,9 +14,9 @@ namespace PlatziTrips.Classes
         public static bool IniciarSesion(string user, string password)
         {
             if (string.IsNullOrEmpty(user) || string.IsNullOrEmpty(password))
-                return true;
+                return false;
             else
-                return false;            
+                return true;            
         }
 
     }
