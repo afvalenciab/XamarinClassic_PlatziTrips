@@ -24,5 +24,17 @@ namespace PlatziTrips.Classes
 
             return estado_insercion;
         }
+
+        public static List<Viaje> LeerViajes(string ruta_db)
+        {
+            List<Viaje> listViaje = new List<Viaje>();
+
+            using (SQLite.SQLiteConnection conn = new SQLite.SQLiteConnection(ruta_db))
+            {
+                listViaje = conn.Table<Viaje>().ToList();
+            }
+
+            return listViaje;
+        }
     }
 }

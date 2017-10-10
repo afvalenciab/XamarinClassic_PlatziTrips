@@ -18,5 +18,10 @@ namespace PlatziTrips.Classes
         public DateTime FechaInicio { get; set; }
 
         public DateTime FechaRegreso { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Nombre} ({FechaInicio} - {FechaRegreso})";
+        }
     }
 }

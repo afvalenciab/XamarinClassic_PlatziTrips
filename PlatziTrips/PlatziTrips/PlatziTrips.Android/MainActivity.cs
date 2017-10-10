@@ -7,8 +7,7 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 using PlatziTrips.Classes;
-
-
+using System.IO;
 
 namespace PlatziTrips.Droid
 {
@@ -23,7 +22,7 @@ namespace PlatziTrips.Droid
 			base.OnCreate (bundle);
 
 			// Set our view from the "main" layout resource
-			SetContentView (Resource.Layout.Main);
+			SetContentView (Resource.Layout.Main);            
 
             userEditText = FindViewById<EditText>(Resource.Id.userEditText);
             passwordEditText = FindViewById<EditText>(Resource.Id.passwordEditText);
@@ -34,10 +33,23 @@ namespace PlatziTrips.Droid
 
         private void LoginButton_Click(object sender, EventArgs e)
         {
-            InicioSesion.IniciarSesion(userEditText.Text, passwordEditText.Text);
+            if (InicioSesion.IniciarSesion(userEditText.Text, passwordEditText.Text))
+            {
+                Intent intent = new Intent(this, typeof(NuevoViajeActivity));
+                StartActivity(intent);
+            }
         }
-        
-	}
+
+        public static string ObtenerRutaBaseDatos()
+        {
+            string nombreArchivoBD = "viaje_db.sqlite";
+            string ruta = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
+
+            return Path.Combine(ruta, nombreArchivoBD);            
+        }
+
+
+    }
 }
 
 
