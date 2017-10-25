@@ -76,6 +76,7 @@
     <Reference Include="Mono.Android" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DetallesViajeActivity.cs" />
     <Compile Include="ListaViajeActivity.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="NuevoViajeActivity.cs" />
@@ -92,6 +93,9 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\ListaViajes.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\DetallesViaje.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

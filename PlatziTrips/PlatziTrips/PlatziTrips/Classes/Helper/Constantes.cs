@@ -16,5 +16,10 @@ namespace PlatziTrips.Classes.Helper
             return $"https://api.foursquare.com/v2/venues/categories?client_id={CLIENT_ID}&client_secret={CLIENT_SECRET}&v={DateTime.Now.ToString("yyyyMMdd")}";
         }
 
+        public static string ObtenerURLLugares(string ciudad, string idCategoria)
+        {
+            return $"https://api.foursquare.com/v2/venues/search?near={ciudad}&categoryId={idCategoria}&client_id={CLIENT_ID}&client_secret={CLIENT_SECRET}&v={DateTime.Now.ToString("yyyyMMdd")}";
+        }
+
     }
 }
