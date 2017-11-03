@@ -19,14 +19,13 @@ namespace PlatziTrips.Droid
 
         Toolbar viajesToolbar;
         ListView listaViajesListView;
-
+        List<Viaje> viajes;
 
         public ListaViajeActivity()
         {
             
         }
 
-        List<Viaje> viajes;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -35,6 +34,7 @@ namespace PlatziTrips.Droid
             
             viajesToolbar = FindViewById<Toolbar>(Resource.Id.ViajesToolbar);
             listaViajesListView = FindViewById<ListView>(Resource.Id.ListaViajesView);
+            listaViajesListView.ItemClick += ListaViajesListView_ItemClick;
 
             SetActionBar(viajesToolbar);
             ActionBar.Title = "Mis Viajes";
@@ -53,6 +53,22 @@ namespace PlatziTrips.Droid
             viajes = DataBaseHelper.LeerViajes(MainActivity.ObtenerRutaBaseDatos());
             var arrayAdapter = new ArrayAdapter(this, Android.Resource.Layout.SimpleListItem1, viajes);
             listaViajesListView.Adapter = arrayAdapter;            
+        }
+
+        private void ListaViajesListView_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
+        {
+            var ciudad_seleccionada = viajes[e.Position];
+
+            Intent intent = new Intent(this, typeof(DetallesViajeActivity));
+
+            var bundle = new Bundle();
+            bundle.PutString("nombre_ciudadSeleccionada", ciudad_seleccionada.Nombre);
+            bundle.PutString("fechaIda_ciudadSeleccionada", ciudad_seleccionada.FechaInicio.ToString("MMM dd"));
+            bundle.PutString("fechaRegreso_ciudadSeleccionada", ciudad_seleccionada.FechaRegreso.ToString("MMM dd"));
+            bundle.PutInt("id_ciudadSeleccionada", ciudad_seleccionada.Id);
+
+            intent.PutExtras(bundle);
+            StartActivity(intent);
         }
 
         public override bool OnCreateOptionsMenu(IMenu menu)

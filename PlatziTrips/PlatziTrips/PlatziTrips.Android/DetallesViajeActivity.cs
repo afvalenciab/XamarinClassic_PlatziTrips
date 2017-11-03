@@ -15,10 +15,11 @@ namespace PlatziTrips.Droid
     [Activity(Label = "DetallesViajeActivity")]
     public class DetallesViajeActivity : Activity
     {
-
         Toolbar detallesToolbar;
         TextView FechaTtextView, ciudadTextView;
         ListView detalleListView;
+        string nombreCiudadSeleccionada, fechaIda, fechaRegreso;
+        int idCiudadSeleccionada;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -32,6 +33,15 @@ namespace PlatziTrips.Droid
             detalleListView = FindViewById<ListView>(Resource.Id.detalleListView);
 
             SetActionBar(detallesToolbar);
+
+            nombreCiudadSeleccionada = Intent.Extras.GetString("nombre_ciudadSeleccionada");
+            fechaIda = Intent.Extras.GetString("fechaIda_ciudadSeleccionada");
+            fechaRegreso = Intent.Extras.GetString("fechaRegreso_ciudadSeleccionada");
+            idCiudadSeleccionada = Intent.Extras.GetInt("id_ciudadSeleccionada");
+
+            ciudadTextView.Text = nombreCiudadSeleccionada;
+            FechaTtextView.Text = $"{fechaIda} - {fechaRegreso}";
+
         }
 
         public override bool OnCreateOptionsMenu(IMenu menu)
@@ -46,7 +56,11 @@ namespace PlatziTrips.Droid
 
             if ("Agregar".Equals(item.TitleFormatted.ToString()))
             {
-                Intent intent = new Intent(this, typeof(NuevoViajeActivity));
+                Intent intent = new Intent(this, typeof(VenuesActivity));
+                var bundle = new Bundle();
+                bundle.PutString("nombre_ciudadSeleccionada",nombreCiudadSeleccionada);
+
+                intent.PutExtras(bundle);
                 StartActivity(intent);
             }
 

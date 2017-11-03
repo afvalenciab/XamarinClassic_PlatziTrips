@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 
 namespace PlatziTrips.Classes
 {
-    class FoursquareHelper
+    public class FoursquareHelper
     {
         public async Task<List<Category>> ObtenerCategorias()
         {

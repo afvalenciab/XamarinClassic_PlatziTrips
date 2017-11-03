@@ -21,7 +21,12 @@ namespace PlatziTrips.Classes
         public string id { get; set; }
         public string name { get; set; }        
         public Location location { get; set; }
-        public List<Category> categories { get; set; }                                                
+        public List<Category> categories { get; set; }
+
+        public override string ToString()
+        {
+            return name;
+        }
     }
 
     public class Location
