@@ -25,6 +25,7 @@ namespace PlatziTrips.Droid
         List<Venue> listVenues;
 
         string nombreCiudadSelecccionad;
+        int idCiudadSeleccionada;
 
         protected override async void OnCreate(Bundle savedInstanceState)
         {
@@ -45,8 +46,14 @@ namespace PlatziTrips.Droid
 
             categoriaSpinner.ItemSelected += CategoriaSpinner_ItemSelected;
             nombreCiudadSelecccionad = Intent.Extras.GetString("nombre_ciudadSeleccionada");
+            idCiudadSeleccionada = Intent.Extras.GetInt("id_ciudadSeleccionada");
 
             filtroEditText.TextChanged += FiltroEditText_TextChanged;
+
+            SetActionBar(nuevoLugarToolbar);
+            ActionBar.Title = "Elegir Destinos";
+
+            venuesListView.ChoiceMode = ChoiceMode.Multiple;
         }
         
         private async void CategoriaSpinner_ItemSelected(object sender, AdapterView.ItemSelectedEventArgs e)
@@ -56,7 +63,7 @@ namespace PlatziTrips.Droid
             FoursquareHelper helper = new FoursquareHelper();
             listVenues = await helper.ObtenerLugares(nombreCiudadSelecccionad, categoriaSeleccionada.id);
 
-            var venuesAdapter = new ArrayAdapter(this,Android.Resource.Layout.SimpleListItem1,listVenues);
+            var venuesAdapter = new ArrayAdapter(this,Android.Resource.Layout.SimpleListItemMultipleChoice,listVenues);
             venuesListView.Adapter = venuesAdapter;
         }
 
@@ -64,8 +71,51 @@ namespace PlatziTrips.Droid
         {
             var listaFiltrada = listVenues.Where(v => v.name.ToLower().Contains(filtroEditText.Text.ToLower())).ToList();
 
-            var venusAdapter = new ArrayAdapter(this, Android.Resource.Layout.SimpleListItem1, listaFiltrada);
+            var venusAdapter = new ArrayAdapter(this, Android.Resource.Layout.SimpleListItemMultipleChoice, listaFiltrada);
             venuesListView.Adapter = venusAdapter;
+        }
+
+        public override bool OnCreateOptionsMenu(IMenu menu)
+        {
+            MenuInflater.Inflate(Resource.Menu.guardar,menu);
+
+            return base.OnCreateOptionsMenu(menu);
+        }
+
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            if ("Guardar".Equals(item.TitleFormatted.ToString()))
+            {
+                bool elementosGuardados = true;
+                var posicionesSeleccionadas = venuesListView.CheckedItemPositions;
+
+                for (int i = 0; i < posicionesSeleccionadas.Size(); i++)
+                {
+                    if ( posicionesSeleccionadas.ValueAt(i) )
+                    {
+                        var textoCelda = venuesListView.Adapter.GetItem(posicionesSeleccionadas.KeyAt(i)).ToString();
+                        var venueSeleccionada = listVenues.Where(v => textoCelda.Contains(v.name)).First();
+
+                        LugarDeInteres lugarDeInteres = new LugarDeInteres(venueSeleccionada, idCiudadSeleccionada);
+                        if ( ! DataBaseHelper.Insertar(ref lugarDeInteres, MainActivity.ObtenerRutaBaseDatos()) )
+                        {
+                            elementosGuardados = false;
+                        }
+                    }
+                }
+
+                if (elementosGuardados)
+                {
+                    Toast.MakeText(this, "Elementos insertados", ToastLength.Long).Show();
+                }
+                else
+                {
+                    Toast.MakeText(this, "Error insertando datos", ToastLength.Long).Show();
+                }
+                
+            }
+
+            return base.OnOptionsItemSelected(item);
         }
     }
 }

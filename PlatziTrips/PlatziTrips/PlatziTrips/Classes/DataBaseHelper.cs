@@ -31,10 +31,24 @@ namespace PlatziTrips.Classes
 
             using (SQLite.SQLiteConnection conn = new SQLite.SQLiteConnection(ruta_db))
             {
+                conn.CreateTable<Viaje>();
                 listViaje = conn.Table<Viaje>().ToList();
             }
 
             return listViaje;
+        }
+
+        public static List<LugarDeInteres> LeerLugaresDeInteres(int idViaje, string ruta_db)
+        {
+            List<LugarDeInteres> listLugaresDeInteres = new List<LugarDeInteres>();
+
+            using (SQLite.SQLiteConnection conn = new SQLite.SQLiteConnection(ruta_db))
+            {
+                conn.CreateTable<LugarDeInteres>();
+                listLugaresDeInteres = conn.Table<LugarDeInteres>().Where(l => l.IdViaje == idViaje).ToList();
+            }
+
+            return listLugaresDeInteres;
         }
     }
 }

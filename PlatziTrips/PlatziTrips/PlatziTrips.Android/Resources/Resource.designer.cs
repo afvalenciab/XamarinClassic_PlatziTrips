@@ -48,7 +48,10 @@ namespace PlatziTrips.Droid
 			public const int ic_add = 2130837504;
 			
 			// aapt resource value: 0x7f020001
-			public const int Icon = 2130837505;
+			public const int ic_save = 2130837505;
+			
+			// aapt resource value: 0x7f020002
+			public const int Icon = 2130837506;
 			
 			static Drawable()
 			{
@@ -104,6 +107,9 @@ namespace PlatziTrips.Droid
 			
 			// aapt resource value: 0x7f070012
 			public const int menu_agregar = 2131165202;
+			
+			// aapt resource value: 0x7f070013
+			public const int menu_guardar = 2131165203;
 			
 			// aapt resource value: 0x7f070009
 			public const int nuevoLuegarToolbar = 2131165193;
@@ -163,6 +169,9 @@ namespace PlatziTrips.Droid
 			
 			// aapt resource value: 0x7f060000
 			public const int agregar = 2131099648;
+			
+			// aapt resource value: 0x7f060001
+			public const int guardar = 2131099649;
 			
 			static Menu()
 			{

@@ -9,6 +9,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using PlatziTrips.Classes;
 
 namespace PlatziTrips.Droid
 {
@@ -20,6 +21,7 @@ namespace PlatziTrips.Droid
         ListView detalleListView;
         string nombreCiudadSeleccionada, fechaIda, fechaRegreso;
         int idCiudadSeleccionada;
+        List<LugarDeInteres> listLugaresDeInteres;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -42,6 +44,19 @@ namespace PlatziTrips.Droid
             ciudadTextView.Text = nombreCiudadSeleccionada;
             FechaTtextView.Text = $"{fechaIda} - {fechaRegreso}";
 
+            listLugaresDeInteres = new List<LugarDeInteres>();
+            listLugaresDeInteres = DataBaseHelper.LeerLugaresDeInteres(idCiudadSeleccionada, MainActivity.ObtenerRutaBaseDatos());
+            var arrayAdapter = new ArrayAdapter(this, Android.Resource.Layout.SimpleListItem1, listLugaresDeInteres);
+            detalleListView.Adapter = arrayAdapter;
+        }
+
+        protected override void OnRestart()
+        {
+            base.OnRestart();
+
+            listLugaresDeInteres = DataBaseHelper.LeerLugaresDeInteres(idCiudadSeleccionada, MainActivity.ObtenerRutaBaseDatos());
+            var arrayAdapter = new ArrayAdapter(this, Android.Resource.Layout.SimpleListItem1, listLugaresDeInteres);
+            detalleListView.Adapter = arrayAdapter;
         }
 
         public override bool OnCreateOptionsMenu(IMenu menu)
@@ -59,6 +74,7 @@ namespace PlatziTrips.Droid
                 Intent intent = new Intent(this, typeof(VenuesActivity));
                 var bundle = new Bundle();
                 bundle.PutString("nombre_ciudadSeleccionada",nombreCiudadSeleccionada);
+                bundle.PutInt("id_ciudadSeleccionada", idCiudadSeleccionada);
 
                 intent.PutExtras(bundle);
                 StartActivity(intent);

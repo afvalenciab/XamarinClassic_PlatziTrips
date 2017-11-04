@@ -6,7 +6,7 @@
   <style name="AppTheme" parent="android:Theme.Material.Light">
     <item name="android:windowNoTitle">true</item>
     <item name="android:windowActionBar">false</item>
-    <item name="android:colorPrimary">#1C3643</item>
+    <item name="android:colorPrimary">#64DD17</item>
     <item name="android:colorAccent">#97C93E</item>
     <item name="android:statusBarColor">#1C3643</item>
     <item name="android:colorPrimaryDark">#FFFFFF</item>        
