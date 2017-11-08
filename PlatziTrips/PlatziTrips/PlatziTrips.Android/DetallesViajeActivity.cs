@@ -48,7 +48,9 @@ namespace PlatziTrips.Droid
             listLugaresDeInteres = DataBaseHelper.LeerLugaresDeInteres(idCiudadSeleccionada, MainActivity.ObtenerRutaBaseDatos());
             var arrayAdapter = new ArrayAdapter(this, Android.Resource.Layout.SimpleListItem1, listLugaresDeInteres);
             detalleListView.Adapter = arrayAdapter;
-        }
+
+            ciudadTextView.Click += CiudadTextView_Click;
+        }        
 
         protected override void OnRestart()
         {
@@ -81,6 +83,29 @@ namespace PlatziTrips.Droid
             }
 
             return base.OnOptionsItemSelected(item);
+        }
+
+        private void CiudadTextView_Click(object sender, EventArgs e)
+        {
+            double[] arrayLongitudes = new double[listLugaresDeInteres.Count];
+            double[] arrayLatitudes = new double[listLugaresDeInteres.Count];
+
+            int contador = 0;
+            foreach (var lugar in listLugaresDeInteres)
+            {
+                arrayLatitudes[contador] = lugar.Latitud;
+                arrayLongitudes[contador] = lugar.Longitud;
+                contador++;
+            }
+
+            Intent intent = new Intent(this, typeof(MapaActivity));
+            Bundle bundle = new Bundle();
+
+            bundle.PutDoubleArray("ArrayLatitudes", arrayLatitudes);
+            bundle.PutDoubleArray("ArrayLongitudes", arrayLongitudes);
+
+            intent.PutExtras(bundle);
+            StartActivity(intent);
         }
     }
 }
